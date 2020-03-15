@@ -58,36 +58,80 @@ $("#btnAdd").on('click', function () {
             $('#hidden').val('');
             $('#preImg').attr('src', '../assets/img/default.png')
         },
-        error: function() {
+        error: function () {
             console.log(err)
         }
     })
 })
 
 //给编辑按钮添加点击事件
-$('tbody').on('click','.edit',function() {
+var userId;
+$('tbody').on('click', '.edit', function () {
+    userId = $(this).attr('data-id');
+    // console.log(userId);
     $('h2').text('编辑用户');
     //获取当前被点击的这个元素的父级元素 tr
     let tr = $(this).parents('tr');
-    $('#preImg').attr('src',tr.find('img').attr('src'));
+    $('#preImg').attr('src', tr.find('img').attr('src'));
     $('#hidden').val(tr.find('img').attr('src'));
     //显示编辑框数据
     $('input[name="email"]').val(tr.children().eq(2).text());
     $('input[name="nickName"]').val(tr.children().eq(3).text());
-    if(tr.children().eq(4).text()=='未激活'){
-        $('#status0').prop('checked',true);
-    }else {
-        $('#status1').prop('checked',true);
+    if (tr.children().eq(4).text() == '未激活') {
+        $('#status0').prop('checked', true);
+    } else {
+        $('#status1').prop('checked', true);
     }
 
-    if(tr.children().eq(5).text()=='超级管理员'){
-        $('#admin').prop('checked',true);
-    }else {
-        $('#normal').prop('checked',true);
+    if (tr.children().eq(5).text() == '超级管理员') {
+        $('#admin').prop('checked', true);
+    } else {
+        $('#normal').prop('checked', true);
     }
 
     //切换编辑和添加按钮
     $('#btnAdd').hide();
     $('#btnEdit').show();
 
+})
+
+//完成修改提交编辑的功能
+$('#btnEdit').on('click', function () {
+    //收集到表单数据信息
+    let data = $('form').serialize();
+    $.ajax({
+        type: 'PUT',
+        url: '/users/' + userId,
+        data: data,
+        success: function (res) {
+            //更新数组
+            let index = userArr.findIndex(item => res._id = item._id);
+            userArr[index] = res;
+            //重新渲染
+            render();
+            //恢复成之前添加表单的样式
+            // 只我们编辑完成了 之前的那个表单要变成添加用户的表单 
+            $('h2').text('添加新用户');
+
+            $('#preImg').attr("src", '../assets/img/default.png');
+            $('#hidden').val('');
+            // 表示将这个输入框 设置为启用
+            $('input[name="email"]').prop('disabled', false).val('');
+            $('input[name="nickName"]').val('');
+            // 表示将这个输入框 设置为启用
+            $('input[name="password"]').prop('disabled', false);
+
+            $('#status0').prop('checked', false)
+            $('#status1').prop('checked', false)
+            $('#admin').prop('checked', false)
+            $('#normal').prop('checked', false)
+
+            $('#btnAdd').show();
+            $('#btnEdit').hide();
+
+        },
+        error: function (err) {
+            console.log(err);
+        }
+    })
 })
