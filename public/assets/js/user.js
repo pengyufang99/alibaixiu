@@ -63,3 +63,31 @@ $("#btnAdd").on('click', function () {
         }
     })
 })
+
+//给编辑按钮添加点击事件
+$('tbody').on('click','.edit',function() {
+    $('h2').text('编辑用户');
+    //获取当前被点击的这个元素的父级元素 tr
+    let tr = $(this).parents('tr');
+    $('#preImg').attr('src',tr.find('img').attr('src'));
+    $('#hidden').val(tr.find('img').attr('src'));
+    //显示编辑框数据
+    $('input[name="email"]').val(tr.children().eq(2).text());
+    $('input[name="nickName"]').val(tr.children().eq(3).text());
+    if(tr.children().eq(4).text()=='未激活'){
+        $('#status0').prop('checked',true);
+    }else {
+        $('#status1').prop('checked',true);
+    }
+
+    if(tr.children().eq(5).text()=='超级管理员'){
+        $('#admin').prop('checked',true);
+    }else {
+        $('#normal').prop('checked',true);
+    }
+
+    //切换编辑和添加按钮
+    $('#btnAdd').hide();
+    $('#btnEdit').show();
+
+})
