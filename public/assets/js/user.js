@@ -135,3 +135,23 @@ $('#btnEdit').on('click', function () {
         }
     })
 })
+
+//删除单个用户
+$('tbody').on('click', '.del', function () {
+    //获取当前id
+    let id = $(this).attr('data-id');
+    //确认删除
+    if (confirm('您真的要删除这个用户吗')) {
+        //发送ajax
+        $.ajax({
+            type: 'delete',
+            url: '/users/' + id,
+            success: function (res) {
+                //从数组中找出该元素
+                let index = userArr.findIndex(item => item._id === res._id);
+                userArr.splice(index, 1);
+                render();
+            }
+        })
+    }
+})
