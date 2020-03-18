@@ -1,9 +1,10 @@
 <script src="/login/status"></script>
 <script>
-  if(!isLogin) location.href = '/admin/login.html';
+  if (!isLogin) location.href = '/admin/login.html';
 </script>
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="utf-8">
   <title>Add new post &laquo; Admin</title>
@@ -13,6 +14,7 @@
   <link rel="stylesheet" href="../assets/css/admin.css">
   <script src="../assets/vendors/nprogress/nprogress.js"></script>
 </head>
+
 <body>
   <script>NProgress.start()</script>
 
@@ -39,8 +41,9 @@
             <input id="title" class="form-control input-lg" name="title" type="text" placeholder="文章标题">
           </div>
           <div class="form-group">
-            <label for="content">标题</label>
-            <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10" placeholder="内容"></textarea>
+            <label for="content">内容</label>
+            <textarea id="content" class="form-control input-lg" name="content" cols="30" rows="10"
+              placeholder="内容"></textarea>
           </div>
         </div>
         <div class="col-md-3">
@@ -49,27 +52,28 @@
             <!-- show when image chose -->
             <img class="help-block thumbnail" style="display: none">
             <input id="feature" class="form-control" name="feature" type="file">
+            <input type="hidden" id="hidden" name="thumbnail">
           </div>
           <div class="form-group">
             <label for="category">所属分类</label>
             <select id="category" class="form-control" name="category">
-              <option value="1">未分类</option>
-              <option value="2">潮生活</option>
+
             </select>
           </div>
           <div class="form-group">
             <label for="created">发布时间</label>
-            <input id="created" class="form-control" name="created" type="datetime-local">
+            <input id="created" class="form-control" name="createAt" type="datetime-local">
           </div>
           <div class="form-group">
             <label for="status">状态</label>
-            <select id="status" class="form-control" name="status">
-              <option value="drafted">草稿</option>
-              <option value="published">已发布</option>
+            <select id="status" class="form-control" name="state">
+              <option value="0">草稿</option>
+              <option value="1">已发布</option>
             </select>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary" type="submit">保存</button>
+            <!-- <button class="btn btn-primary" type="submit">保存</button> -->
+            <button class="btn btn-primary" type="button" id="btnAdd">保存</button>
           </div>
         </div>
       </form>
@@ -117,5 +121,13 @@
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
   <script>NProgress.done()</script>
   <script src="../assets/js/common.js"></script>
+  <script src="../assets/vendors/art-template/template-web.js"></script>
+  <script type="text/html" id="cateTpl">
+    {{each data}}
+    <option value="{{$value._id}}">{{$value.title}}</option>
+    {{/each}}
+  </script>
+  <script src="../assets/js/post-add.js"></script>
 </body>
+
 </html>
