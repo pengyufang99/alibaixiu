@@ -1,9 +1,10 @@
 <script src="/login/status"></script>
 <script>
-  if(!isLogin) location.href = '/admin/login.html';
+  if (!isLogin) location.href = '/admin/login.html';
 </script>
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="utf-8">
   <title>Comments &laquo; Admin</title>
@@ -13,6 +14,7 @@
   <link rel="stylesheet" href="../assets/css/admin.css">
   <script src="../assets/vendors/nprogress/nprogress.js"></script>
 </head>
+
 <body>
   <script>NProgress.start()</script>
 
@@ -49,7 +51,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="danger">
+          <!-- <tr class="danger">
             <td>大大</td>
             <td>楼主好人，顶一个</td>
             <td>《Hello world》</td>
@@ -81,7 +83,7 @@
               <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
               <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
     </div>
@@ -128,5 +130,23 @@
   <script src="../assets/vendors/bootstrap/js/bootstrap.js"></script>
   <script>NProgress.done()</script>
   <script src="../assets/js/common.js"></script>
+  <script src="../assets/js/comments.js"></script>
+  <script src="../assets/vendors/art-template/template-web.js"></script>
+  <script type="text/html" id="comTpl">
+    {{each}}
+    <tr>
+      <td>大大</td>
+      <td>楼主好人，顶一个</td>
+      <td>《Hello world》</td>
+      <td>2026/10/07</td>
+      <td>已批准</td>
+      <td class="text-center">
+        <a href="post-add.html" class="btn btn-warning btn-xs">驳回</a>
+        <a href="javascript:;" class="btn btn-danger btn-xs">删除</a>
+      </td>
+    </tr>
+    {{/each}}
+  </script>
 </body>
+
 </html>

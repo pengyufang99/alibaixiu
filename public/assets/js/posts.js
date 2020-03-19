@@ -5,8 +5,9 @@ var state = $('#state').val();
 render(cid, state)
 
 
-
+var currentPage=1;
 function changePage(index) {
+    currentPage = index;
     render(cid, state, index)
 }
 
@@ -47,4 +48,18 @@ function render(cid, state, page = 1) {
             $('.pagination').html(pageHtml);
         }
     })
-}
+};
+
+
+$('tbody').on('click','.del',function() {
+    if(confirm('您真的要删除？')){
+        let id = $(this).attr('data-id');
+        $.ajax({
+            type: 'delete',
+            url: '/posts/' + id,
+            success: function(res) {
+                render(cid,state,currentPage);
+            }
+        })
+    }
+})
