@@ -38,3 +38,14 @@ $.ajax({
         $('.hots ul').html(html);
     }
 })
+
+//最新发布
+$.ajax({
+    type: 'get',
+    url: 'posts/lasted',
+    success: function(res) {
+        // console.log(res);
+        let html = template('newTpl',{data:res});
+        $('.new').append(html)
+    }
+})
