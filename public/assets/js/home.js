@@ -3,7 +3,7 @@ $.ajax({
     type: 'get',
     url: '/slides',
     success: function (res) {
-        console.log(res);
+        // console.log(res);
         let html = template('sTpl', { data: res })
         $('.swipe-wrapper').html(html);
         //
@@ -26,5 +26,15 @@ $.ajax({
                 swiper.next();
             }
         })
+    }
+})
+//获取热门推荐
+$.ajax({
+    type: 'get',
+    url: '/posts/recommend',
+    success: function(res) {
+        // console.log(res);
+        let html = template('reTpl',{data:res});
+        $('.hots ul').html(html);
     }
 })
