@@ -50,3 +50,13 @@ $.ajax({
         console.log(res);
     }
 })
+
+
+//搜索功能
+$('.search form').on('submit',function() {
+    // alert($(this).find('.keys').val());
+    //获取到用户在表单中输入的搜索关键字
+    var keys = $(this).find('.keys').val();
+    location.href = '/search.html?keys='+keys;
+    return false;
+})
