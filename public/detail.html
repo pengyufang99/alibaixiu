@@ -275,13 +275,13 @@
       <span>分类: <a href="javascript:;">{{category.title}}</a></span>
       <span>阅读: ({{meta.views}})</span>
       <span>评论: ({{meta.comments}})</span>
+      <a href="javascript:;" id="good">点赞</a>
     </div>
   
   
   </script>
 
   <script>
-
     $.ajax({
       type: 'get',
       url: `/posts/${id}`,
@@ -293,7 +293,17 @@
       }
     })
 
-
+    //点赞功能实现
+    $('.article').on('click','#good',function() {
+      //发送ajax请求，执行点赞功能
+      $.ajax({
+        type: 'post',
+        url: '/posts/fabulous/'+id,
+        success: function(res) {
+          alert('点赞成功，感谢你的支持');
+        }
+      })
+    })
 
   </script>
 </body>
