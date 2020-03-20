@@ -37,6 +37,16 @@ $.ajax({
         {{/each}}
         `;
         let html = template.render(categoriesTpl,{data:res});
-        $('.nav_data').html(html)
+        $('.nav_data').html(html);
+    }
+})
+
+
+//获取最新评论
+$.ajax({
+    type: 'get',
+    url: '/comments/lasted',
+    success: function(res) {
+        console.log(res);
     }
 })

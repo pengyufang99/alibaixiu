@@ -1,5 +1,30 @@
+<script>
+  function getParams(key) {
+    //  我们首先获取浏览器地址栏上面的数数组 从?后面开始截取 使用&将其分隔为数组 
+    let params = location.search.substr(1).split('&');
+    // 遍历数组 
+    for (var i = 0; i < params.length; i++) {
+      // 因为数组元素 key=value这种形式 所以我们就字符串转换为数组元素 
+      let temp = params[i].split('=');
+
+      // temp是数组  它的0下标 
+      if (temp[0] === key) {
+        return temp[1]
+      }
+    }
+    return -1
+  }
+
+  let id = getParams('id')
+
+  if (id === -1) {
+    location.href = "index.html"
+  }
+
+</script>
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,6 +32,7 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.css">
 </head>
+
 <body>
   <div class="wrapper">
     <div class="topnav">
@@ -178,7 +204,7 @@
     </div>
     <div class="content">
       <div class="article">
-        <div class="breadcrumb">
+        <!-- <div class="breadcrumb">
           <dl>
             <dt>当前位置：</dt>
             <dd><a href="javascript:;">奇趣事</a></dd>
@@ -193,7 +219,7 @@
           <span>分类: <a href="javascript:;">奇趣事</a></span>
           <span>阅读: (2421)</span>
           <span>评论: (143)</span>
-        </div>
+        </div> -->
       </div>
       <div class="panel hots">
         <h3>热门推荐</h3>
@@ -232,5 +258,44 @@
   <script src="./assets/vendors/jquery/jquery.min.js"></script>
   <script src="./assets/js/public.js"></script>
   <script src="./assets/vendors/art-template/template-web.js"></script>
+
+  <script type="text/html" id="tpl">
+    <div class="breadcrumb">
+      <dl>
+        <dt>当前位置：</dt>
+        <dd><a href="javascript:;">{{category.title}}</a></dd>
+        <dd>{{title}}</dd>
+      </dl>
+    </div>
+    <h2 class="title">
+      <a href="javascript:;">{{content}}</a>
+    </h2>
+    <div class="meta">
+      <span>{{author.nickName}}发布于 {{createAt && createAt.substr(0,10)}}</span>
+      <span>分类: <a href="javascript:;">{{category.title}}</a></span>
+      <span>阅读: ({{meta.views}})</span>
+      <span>评论: ({{meta.comments}})</span>
+    </div>
+  
+  
+  </script>
+
+  <script>
+
+    $.ajax({
+      type: 'get',
+      url: `/posts/${id}`,
+      success: function (res) {
+        console.log(res);
+        let html = template('tpl', res);
+        // console.log(html);
+        $('.article').html(html);
+      }
+    })
+
+
+
+  </script>
 </body>
+
 </html>
